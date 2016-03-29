@@ -24,18 +24,15 @@ defined( 'ABSPATH' ) || die( 'Our survey says: ... X.' );
 function _plugin_template_requirements_error(){
 	?>
 	<div class="notice notice-error">
-		<p><?php _e( 'Error: This plugin requires WordPress v4.4 or higher (current: ' . $GLOBALS['wp_version'] . ') and PHP v5.6 or higher (current: ' . phpversion() . '). You must be up to date or this plugin cannot be activated.', 'plugin-template' ); ?></p>
+		<p><?php _e( 'Error: This plugin requires WordPress v4.4 or higher (current: ' . $GLOBALS['wp_version'] . ') and PHP v5.6 or higher (current: ' . phpversion() . '). You must be up to date or this plugin will only give this message and nothing more.', 'plugin-template' ); ?></p>
 	</div>
 	<?php
 }
 
-if ( version_compare( $GLOBALS['wp_version'], '4.4.0', '<' ) || version_compare( phpversion(), '5.7.0', '<' ) ) {
+if ( version_compare( $GLOBALS['wp_version'], '4.4.0', '<' ) || version_compare( phpversion(), '5.6.0', '<' ) ) {
 	
 	//throw error and end plugin declarations and processes.
-	add_action( 'admin_notices', 'bop_null_requirements_error' );
-	if ( is_plugin_active( plugin_basename( __FILE__ ) ) ) {
-		deactivate_plugins( plugin_basename( __FILE__ ) );
-	}
+	add_action( 'admin_notices', '_plugin_template_requirements_error' );
 	
 	//leave file (avoid syntax conflicts with earlier php/wp versions)
 	return;
