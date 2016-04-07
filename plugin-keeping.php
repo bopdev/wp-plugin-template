@@ -19,18 +19,16 @@ $wpdb->PLUGIN_TEMPLATE_TABLE = $wpdb->prefix . 'PLUGIN_TEMPLATE_TABLE';
  * install, it will run through all the update scripts (consider the
  * first update script as an install script).
  */
-register_activation_hook( __FILE__, function(){
+register_activation_hook( plugin_template_plugin_path( 'init.php' ), function(){
 	
-	define( 'BOP_PLUGIN_ACTIVATING', true ); // change this
-	
-	$current_folder = dirname( __FILE__ ) . DIRECTORY_SEPARATOR;
+	define( 'BOP_PLUGIN_ACTIVATING', true );
 	
 	$db_version = get_site_option( 'PLUGIN_TEMPLATE_version', '0.0.0', false );
-	$pd = get_plugin_data( __FILE__, false, false );
+	$pd = get_plugin_data( plugin_template_plugin_path( 'init.php' ), false, false );
 	
 	if( version_compare( $db_version, $pd['Version'], '<' ) ){
 		
-		if( $handle = opendir( $current_folder . 'updates' ) ){
+		if( $handle = opendir( plugin_template_plugin_path( 'updates' ) ) ){
 			
 			$updates = array();
 			
@@ -43,10 +41,16 @@ register_activation_hook( __FILE__, function(){
 				}
 			}
 			
-			usort( $updates, 'version_compare' );
-			
-			foreach( $updates as $update ){
-				require_once( $current_folder . 'updates' . DIRECTORY_SEPARATOR . $update . DIRECTORY_SEPARATOR . 'update.php' );
+			if( ! empty( $updates ) ){
+				
+				define( 'BOP_PLUGIN_UPDATING', true );
+				
+				usort( $updates, 'version_compare' );
+				
+				foreach( $updates as $update ){
+					require_once( plugin_template_plugin_path( "updates/{$update}/update.php" ) );
+				}
+				
 			}
 			
 			closedir($handle);
