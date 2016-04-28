@@ -67,15 +67,15 @@ register_activation_hook( plugin_template_plugin_path( 'init.php' ), function(){
  * Runs deactivate.php
  * 
  */
-register_deactivation_hook( __FILE__, function(){
+register_deactivation_hook( plugin_template_plugin_path( 'init.php' ), function(){
 	
 	define( 'BOP_PLUGIN_DEACTIVATING', true );
 	
-	require_once( dirname( __FILE__ ) . DIRECTORY_SEPARATOR . 'deactivate.php' );
+	require_once( plugin_template_plugin_path( 'deactivate.php' ) );
 } );
 
 
 /* Set up translations */
 add_action( 'plugins_loaded', function(){
-    load_plugin_textdomain( 'plugin-template', false, basename( dirname( __FILE__ ) ) . DIRECTORY_SEPARATOR . 'languages' . DIRECTORY_SEPARATOR );
+    load_plugin_textdomain( 'plugin-template', false, basename( plugin_template_plugin_path() ) . DIRECTORY_SEPARATOR . 'languages' . DIRECTORY_SEPARATOR );
 } );

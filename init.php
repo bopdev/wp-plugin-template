@@ -65,9 +65,9 @@ if ( version_compare( $GLOBALS['wp_version'], '4.4.0', '<' ) || version_compare(
 	
 }else{
 	
-	require_once( dirname( __FILE__ ) . DIRECTORY_SEPARATOR . 'plugin-keeping.php' );
+	require_once( plugin_template_plugin_path( 'plugin-keeping.php' ) );
 	
 	/* Let's get started! */
-	require_once( dirname( __FILE__ ) . DIRECTORY_SEPARATOR . 'plugin.php' );
+	require_once( plugin_template_plugin_path( 'plugin.php' ) );
 	
 }
