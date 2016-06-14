@@ -11,6 +11,9 @@ Domain Path: /languages
 Text Domain: plugin-template
 */
 
+/*
+ * Plugin Template Version: 1.0.0
+ */
 
 //Reject if accessed directly
 defined( 'ABSPATH' ) || die( 'Our survey says: ... X.' );
