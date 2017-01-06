@@ -12,7 +12,7 @@ Text Domain: plugin-template
 */
 
 /*
- * Plugin Template Version: 1.0.0
+ * Plugin Template Version: 1.1.0
  */
 
 //Reject if accessed directly
