@@ -59,6 +59,9 @@ register_activation_hook( plugin_template_plugin_path( 'init.php' ), function(){
 		
 		update_option( 'PLUGIN_TEMPLATE_version', $pd['Version'], false );
 	}
+	
+	//activation script runs once updates are done.
+	require_once( plugin_template_plugin_path( 'activate.php' ) );
 } );
 
 
