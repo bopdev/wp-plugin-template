@@ -12,7 +12,7 @@ Text Domain: plugin-template
 */
 
 /*
- * Plugin Template Version: 1.1.0
+ * Plugin Template Version: 1.1.1
  */
 
 //Reject if accessed directly
@@ -22,8 +22,8 @@ defined( 'ABSPATH' ) || die( 'Our survey says: ... X.' );
 
 //NOTE: REMEMBER TO REPLACE PLUGIN_TEMPLATE and plugin-template in all files
 
-$wp_version_min_requirement = '4.4';
-$php_version_min_requirement = '5.6';
+//updated v1.1.1 to avoid conflicts between bop plugins
+$plugin_template_version_requirements = ['php'=>'7.0', 'wp'=>'4.9'];
 
 /**
  * Get a path relative to the root of this plugin or relative to a given file path
@@ -53,15 +53,15 @@ function plugin_template_plugin_path( $path = '', $relative_file = false ){
  * @return void.
  */
 function _plugin_template_requirements_error(){
-	global $wp_version_min_requirement, $php_version_min_requirement;
+	global $plugin_template_version_requirements;
 	?>
 	<div class="notice notice-error">
-		<p><?php printf( __( 'Error: This plugin requires WordPress v%s or higher (current: %s) and PHP v%s or higher (current: %s). You must be up to date or this plugin will only give this message and nothing more.', 'plugin-template' ), $wp_version_min_requirement, $GLOBALS['wp_version'], $php_version_min_requirement, phpversion() ); ?></p>
+		<p><?php printf( __( 'Error: This plugin requires WordPress v%s or higher (current: %s) and PHP v%s or higher (current: %s). You must be up to date or this plugin will only give this message and nothing more.', 'plugin-template' ), $plugin_template_version_requirements['wp'], $GLOBALS['wp_version'], $plugin_template_version_requirements['php'], phpversion() ); ?></p>
 	</div>
 	<?php
 }
 
-if ( version_compare( $GLOBALS['wp_version'], $wp_version_min_requirement, '<' ) || version_compare( phpversion(), $php_version_min_requirement, '<' ) ) {
+if ( version_compare( $GLOBALS['wp_version'], $plugin_template_version_requirements['wp'], '<' ) || version_compare( phpversion(), $plugin_template_version_requirements['php'], '<' ) ) {
 	
 	//throw error and end plugin declarations and processes.
 	add_action( 'admin_notices', '_plugin_template_requirements_error' );
